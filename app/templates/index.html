@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Hello, {{ user.username }}! Welcome to MyDataConsulting</h1>
+    {% for post in posts %}
+    <div><p>{{ post.author.username }} says: <b>{{ post.body}}</b></p></div>
+    {% endfor %}
+    <p>Copyright 2023, MyDataConsulting</p>
+{% endblock %}
