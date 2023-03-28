@@ -2,7 +2,10 @@ from datetime import datetime
 from app import db
 
 # if you modify this file, be sure to generate new migration:
-## > flask db migrate -m <yourmessagehere>
+### > flask db migrate -m <yourmessagehere>
+
+# then apply the changes with:
+### > flask db upgrade
 
 # create User table schema for migration
 class User(db.Model):
