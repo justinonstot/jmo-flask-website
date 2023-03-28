@@ -1,3 +1,8 @@
+##
+## remeber to run "flask shell" at the command line before
+## passing commands to the database.
+##
+
 # add a user
 u = User(username='john', email='john@example.com)
 db.session.add(u)
