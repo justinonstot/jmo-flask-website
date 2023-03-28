@@ -1,0 +1,29 @@
+# add a user
+u = User(username='john', email='john@example.com)
+db.session.add(u)
+db.session.commit()
+
+
+# add a post
+# find the user who u want to add a post for
+u = User.query.get(1) #gets user 1 as object
+p = Post(body='my first post!', author=u)
+db.session.add(p)
+db.session.commit()
+
+
+# get all posts written by a user. In this case user 1
+u = User.query.get(1)
+posts = u.posts.all()
+
+# same, but with a user that has no posts
+u = User.query.get(2)
+posts = u.posts.all()
+#### will return '[]'
+
+# print post author and body for all posts
+for p in posts:
+    print(p.id, p.author.username, p.body)
+
+# get all users in reverse alphabetical order
+User.query.order_by(User.username.desc()).all()
