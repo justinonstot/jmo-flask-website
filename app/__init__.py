@@ -11,3 +11,7 @@ migrate = Migrate(app, db)
 login = LoginManager(app) 
 
 from app import routes, models
+
+# Force user to login before viewing pages:
+login = LoginManager(app)
+login.login_view = 'login'
