@@ -64,4 +64,13 @@ def register():
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('login'))
         return render_template('register.html', title='Register', form=form)
-    
+
+@app.route('/user/<username>') #using dynamic component <>
+@login_required # only make the profile available to logged in user.
+def user(username):
+    user = User.query.filter_by(username = username).first_or_404()
+    posts = [
+        {'author':user, 'body':'Test post #1'},
+        {'author': user, 'body':'Test post #2'}
+    ]
+    return render_template('user.html', user=user, posts=posts)
