@@ -29,6 +29,11 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+@login.user_loader
+def load_user(id):
+    return User.query.get(int(id))
+    print("Loading user:", id)
+
 # create Post table schema for migration    
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -38,7 +43,3 @@ class Post(db.Model):
 
     def __repr__(self):
         return '<Post {}>'.format(self.body)
-
-@login.user_loader
-def load_user(id):
-    return User.query.get(int(id))

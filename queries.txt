@@ -1,6 +1,6 @@
 ##
-## remeber to run "flask shell" at the command line before
-## passing commands to the database.
+## remeber to run "flask shell" at the command line 
+## before passing commands to the database.
 ##
 
 # add a user
