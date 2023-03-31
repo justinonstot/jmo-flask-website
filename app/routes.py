@@ -4,10 +4,16 @@ from app.forms import LoginForm, RegistrationForm
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User
 from werkzeug.urls import url_parse
+from datetime import datetime
 
 # ...
 
 # everything here referred to as "view functions"
+@app.before_request
+def before_request():
+    if current_user.is_authenticated:
+        current_user.last_seen = datetime.utcnow()
+        db.session.commit()   
 
 @app.route('/')
 @app.route('/index')
@@ -74,3 +80,4 @@ def user(username):
         {'author': user, 'body':'Test post #2'}
     ]
     return render_template('user.html', user=user, posts=posts)
+
