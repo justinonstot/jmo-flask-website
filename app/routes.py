@@ -5,6 +5,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User
 from werkzeug.urls import url_parse
 from datetime import datetime
+from sqlalchemy.exc import IntegrityError
 
 # ...
 
@@ -66,10 +67,15 @@ def register():
         user = User(username=form.username.data, email=form.email.data)
         user.set_password(form.password.data)
         db.session.add(user)
-        db.session.commit()
-        flash('Congratulations, you are now a registered user!')
-        return redirect(url_for('login'))
-        return render_template('register.html', title='Register', form=form)
+        try:
+            db.session.commit()
+            flash('Congratulations, you are now a registered user!')
+            return redirect(url_for('login'))
+        except IntegrityError:
+            db.session.rollback()
+            flash('An error occurred while registering your account. The username or email may already be in use.', 'error')
+    return render_template('register.html', title='Register', form=form)
+    #return render_template('register.html', title='Register', form=form)
 
 @app.route('/user/<username>') #using dynamic component <>
 @login_required # only make the profile available to logged in user.
